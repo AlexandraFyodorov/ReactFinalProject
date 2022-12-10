@@ -1,56 +1,73 @@
-import {useState, useEffect} from 'react';
-import {collection, doc, onSnapshot, query, QuerySnapshot} from 'firebase/firestore';
-import db from './firebase';
-function Customers() {
-  const [customers, setCustomers]=useState([]);
-  
+import { useSelector } from 'react-redux';
+import {useNavigate } from 'react-router-dom'
 
-  useEffect(()=>{
-    //Customers
-    const q = query(collection(db,'Customers'));
-    onSnapshot(q,(QuerySnapshot)=>{
-      setCustomers(
-        QuerySnapshot.docs.map((doc)=>{
-          return{
-            id:doc.id,
-            ...doc.data(),
-          };
-        })
-      );
-    });
-  },[]);
-  
+function Customers() {
+  const purchases = useSelector((state) => state.purchases);
+  const customers = useSelector((state) => state.customers);
+  const products = useSelector((state) => state.products);
+  const navigate = useNavigate();
+
+
+
+
 
   return (
     <div className="App">
-      <br/><br/><br/>
+      <br /><br />
       <h2>Customers</h2>
-
       <table border='1'>
         <tbody>
-          <th style={{color:'green', padding:'10px'}}>Customer Name</th>
-          <th style={{color:'green', padding:'10px'}}>List of products</th>
-          <th style={{color:'green', padding:'10px'}}>List of dates</th>
-          {customers.map((user)=>{
+          <th style={{ color: 'green', padding: '10px' }}>Customer Name</th>
+          <th style={{ color: 'green', padding: '10px' }}>List of products</th>
+          <th style={{ color: 'green', padding: '10px' }}>List of dates</th>
+
+          {customers.map((user) => {
             return (
               <tr key={user.id}>
+
                 <td>{user.firstName}</td>
+
                 <td>
-                  <li>hello</li>
-                  <li>hello</li>
+                  {
+                    products.map((item) => {
+                      return (
+                        <tr key={item.id}>
+
+                          {
+                            purchases.filter((purchases) => purchases.ProductID === item.id && purchases.CustomerID === user.id).map((x) => {
+                              return (
+                                <tr key={x.id}>
+                                  <li>{item.Name}</li>
+                                </tr>
+                              )
+                            })
+                          }
+                        </tr>
+                      )
+                    })
+                  }
                 </td>
+
                 <td>
-                  <li>1.12.2022</li>
-                  <li>3.12.2022</li>
+                  {
+                    purchases.filter((purchases) => purchases.CustomerID === user.id).map((x) => {
+                      return (
+                        <tr key={x.id}>
+                          <li>{x.Date}</li>
+                        </tr>
+                      )
+                    })
+                  }
                 </td>
               </tr>
             )
           })
-        }
+          }
+
         </tbody>
       </table>
-      <br/><br/>
-      <button>Buy Product</button>
+      <br /><br />
+      <button onClick={()=>navigate(`/buyProduct`)}>Buy Product</button>
     </div>
   );
 }

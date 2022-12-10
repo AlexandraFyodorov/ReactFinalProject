@@ -1,32 +1,19 @@
-import {useState, useEffect} from 'react';
-import {collection, doc, onSnapshot, query, QuerySnapshot} from 'firebase/firestore';
-import db from './firebase';
+import { useSelector } from 'react-redux';
 import Product from './Product';
 
-
 function Products() {
-  const [products, setProducts]=useState([]);
-
-  useEffect(()=>{
-    const q = query(collection(db,'Products'));
-    onSnapshot(q,(QuerySnapshot)=>{
-      setProducts(
-        QuerySnapshot.docs.map((doc)=>{
-          return{
-            id:doc.id,
-            ...doc.data(),
-          };
-        })
-      );
-    });
-  },[])
+  const products = useSelector((state) => state.products);
+  const purchases = useSelector((state) => state.purchases);
   
+
+ 
+ 
 
   return (
     <div className="App">
       <br/><br/><br/>
       <h2>Products</h2>
-      Total Amount of purchased products: {0}
+      Total Amount of purchased products: {purchases.length}
       <br/>
       <ul>
           {products.map((item)=>{
