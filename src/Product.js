@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
-import { Link , useNavigate } from 'react-router-dom'
+import { Link  } from 'react-router-dom'
 
 function Product({ product }) {
   const customers = useSelector((state) => state.customers);
   const purchases = useSelector((state) => state.purchases);
-  const navigate = useNavigate();
+
 
 
   return (
@@ -25,7 +25,10 @@ function Product({ product }) {
                     return (
                       <div key={item.id}> <Link to={`/editCustomer`} state={user.id} >{user.firstName}</Link>
                         <div>Purchased date:{' '}{item.Date}</div>
-                        <button onClick={()=>navigate(`/buyProduct`,{userID: user.id})} >ADD</button>
+                        <Link to={`/buyProduct`} state={user.id} >
+                        <button>ADD</button>
+                        </Link>
+                        
                       </div>
                       
                     ) 

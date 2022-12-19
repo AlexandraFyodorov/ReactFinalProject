@@ -36,9 +36,11 @@ function PurchasesTable() {
 
       <table border='1'>
         <tbody>
-          <th style={{ color: 'blue', padding: '10px' }}>Customer Name</th>
-          <th style={{ color: 'blue', padding: '10px' }}>List of products</th>
-          <th style={{ color: 'blue', padding: '10px' }}>List of dates</th>
+          <tr style={{ color: 'blue', padding: '10px' }}>
+            <td>Customer Name</td>
+            <td>List of products</td>
+            <td>List of dates</td>
+          </tr>
           {
             customerToShow.map((user) => {
               return (
@@ -49,12 +51,13 @@ function PurchasesTable() {
                       productsToShow.map((item) => {
                         return (
                           <tr key={item.id}>
-
                             {
                               purchases.filter((purchases) => purchases.ProductID === item.id && purchases.CustomerID === user.id).map((x) => {
                                 return (
                                   <tr key={x.id}>
+                                    
                                     <li>{item.Name}</li>
+                                    
                                   </tr>
                                 )
                               })
@@ -66,7 +69,7 @@ function PurchasesTable() {
                   </td>
                   <td>
                     {
-                      purchases.filter((purchases) => purchases.CustomerID === user.id && purchases.ProductID).map((x) => {
+                      purchases.filter((purchases) => purchases.CustomerID === user.id).map((x) => {
                         return (
                           <tr key={x.id}>
                             <li>{x.Date}</li>

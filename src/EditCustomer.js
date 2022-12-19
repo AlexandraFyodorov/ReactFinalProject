@@ -9,20 +9,27 @@ function EditCustomer() {
   const location = useLocation()
   const userID = location.state
   const products = useSelector((state) => state.products);
-  //const customers = useSelector((state) => state.customers);
   const purchases = useSelector((state) => state.purchases);
-  const [userData, setUserData] = useState({ firstName: '', lastName: '', City: '' });
-  //let UserFirstName = customers.filter((customers) => customers.id === userID).map((x)=>{return<div key={x.id}>{x.firstName}</div>})
-  //let UserLastName = customers.filter((customers) => customers.id === userID).map((x)=>{return<div key={x.id}>{x.lastName}</div>})
-  //let UserCity = customers.filter((customers) => customers.id === userID).map((x)=>{return<div key={x.id}>{x.City}</div>})
+  const customers = useSelector((state) => state.customers);
+  let userFname=customers.filter((customers) => customers.id === userID).map(x=>x.firstName)
+  let userLname=customers.filter((customers) => customers.id === userID).map(x=>x.lastName)
+  let userCity=customers.filter((customers) => customers.id === userID).map(x=>x.City)
 
+  const [userData, setUserData] = useState({ firstName: '', lastName: '', City: '' });
+
+  
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+   
     const obj = { firstName: userData.firstName, lastName: userData.lastName, City: userData.City }
     await updateDoc(doc(db, 'Customers', userID), obj);
   }
   const DeleteUser = async () => {
+    purchases.filter(purchases=>purchases.CustomerID===userID).map(async (x)=>{
+      return(<div key={x.id}>{await deleteDoc(doc(db, 'Purchases', x.id))}</div>)
+    })
     await deleteDoc(doc(db, 'Customers', userID))
   }
 
@@ -30,16 +37,16 @@ function EditCustomer() {
     <div className="App">
       <br /><br />
       <h2>Edit Customer</h2>
+
       <form style={{ padding: '2px', margin: '5px', width: '100px' }} onSubmit={handleSubmit}>
         First Name:{' '}
-        <input type='text' value={userData.firstName} onChange={(e) => setUserData({ ...userData, firstName: e.target.value })} />
+        <input type='text'  defaultValue={userFname}  onChange={(e) => setUserData({ ...userData, firstName: e.target.value })} required/>
         <br />
         Last Name:{' '}
-        <input type='text' value={userData.lastName} onChange={(e) => setUserData({ ...userData, lastName: e.target.value })} />
+        <input type='text' defaultValue={userLname} onChange={(e) => setUserData({ ...userData, lastName: e.target.value })} required/>
         <br />
         City:{' '}
-        <select onChange={(e) => setUserData({ ...userData, City: e.target.value })}>
-          <option value='' >Choose a City</option>
+        <select defaultValue={userCity} onChange={(e) => setUserData({ ...userData, City: e.target.value })} required>
           <option value='Haifa'>Haifa</option>
           <option value='Afula'>Afula</option>
           <option value='Eilat'>Eilat</option>

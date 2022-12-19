@@ -3,17 +3,19 @@ import { useLocation,Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { updateDoc,doc, deleteDoc } from 'firebase/firestore';
 import db from './firebase';
-import { async } from '@firebase/util';
+
 
 function EditProduct() {
   const location = useLocation()
   const productID = location.state
-
   const products = useSelector((state) => state.products);
   const customers = useSelector((state) => state.customers);
   const purchases = useSelector((state) => state.purchases);
+  let productName=products.filter((products) => products.id === productID).map(x=>x.Name)
+  let productPrice=products.filter((products) => products.id === productID).map(x=>x.Price)
+  let productQuantity=products.filter((products) => products.id === productID).map(x=>x.Quantity)
   const [productData, setProductData] = useState({Name: '', Price: 0, Quantity:0 });
-  const purchasesForDelete = purchases.filter((purchases) => purchases.ProductID === productID).map((x)=>x.id) 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,8 +23,10 @@ function EditProduct() {
     await updateDoc(doc(db, 'Products', productID), obj);
   }
  const DeleteProduct=async()=>{
-  purchases.filter((purchases) => purchases.ProductID === productID).map((x)=> x.id)
-  await deleteDoc(doc(db, 'Purchases',purchasesForDelete))
+  purchases.filter(purchases=>purchases.ProductID===productID).map(async (x)=>{
+    return(<div key={x.id}>{await deleteDoc(doc(db, 'Purchases', x.id))}</div>)
+  })
+  
   await deleteDoc(doc(db, 'Products', productID))
   
   
@@ -33,18 +37,16 @@ function EditProduct() {
     <div className="App">
       <br /><br />
       <h2>Edit Product</h2>
-      {productID}
-      <br/>
-      {purchasesForDelete}
+ 
       <form style={{ padding: '2px', margin: '5px', width: '200px' }} onSubmit={handleSubmit}>
         Product Name:{' '}
-        <input type='text' value={productData.Name} onChange={(e) => setProductData({ ...productData, Name: e.target.value })} />
+        <input type='text' defaultValue={productName} onChange={(e) => setProductData({ ...productData, Name: e.target.value })} />
         <br />
         Price:{' '}
-        <input type='number' value={productData.Price} onChange={(e) => setProductData({ ...productData, Price: e.target.value })} />
+        <input type='number' defaultValue={productPrice} onChange={(e) => setProductData({ ...productData, Price: e.target.value })} />
         <br />
         Quantity:{' '}
-        <input type='number' value={productData.Quantity} onChange={(e) => setProductData({ ...productData, Quantity: e.target.value })} />
+        <input type='number' defaultValue={productQuantity} onChange={(e) => setProductData({ ...productData, Quantity: e.target.value })} />
         <br />
        
         <br /><br />
