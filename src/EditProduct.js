@@ -14,12 +14,13 @@ function EditProduct() {
   let productName=products.filter((products) => products.id === productID).map(x=>x.Name)
   let productPrice=products.filter((products) => products.id === productID).map(x=>x.Price)
   let productQuantity=products.filter((products) => products.id === productID).map(x=>x.Quantity)
-  const [productData, setProductData] = useState({Name: '', Price: 0, Quantity:0 });
+  
+  const [productData, setProductData] = useState({Name: String(productName), Price: parseInt(productPrice), Quantity:parseInt(productQuantity) });
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const obj = { Name: productData.Name, Price: productData.Price, Quantity: productData.Quantity }
+    const obj = { Name: productData.Name, Price: parseInt(productData.Price), Quantity: parseInt(productData.Quantity) }
     await updateDoc(doc(db, 'Products', productID), obj);
   }
  const DeleteProduct=async()=>{

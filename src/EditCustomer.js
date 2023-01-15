@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { collection, addDoc, updateDoc, doc, deleteDoc } from 'firebase/firestore';
+import {updateDoc, doc, deleteDoc } from 'firebase/firestore';
 import db from './firebase';
-import { async } from '@firebase/util';
 
 function EditCustomer() {
   const location = useLocation()
@@ -11,36 +10,37 @@ function EditCustomer() {
   const products = useSelector((state) => state.products);
   const purchases = useSelector((state) => state.purchases);
   const customers = useSelector((state) => state.customers);
-  let userFname=customers.filter((customers) => customers.id === userID).map(x=>x.firstName)
-  let userLname=customers.filter((customers) => customers.id === userID).map(x=>x.lastName)
-  let userCity=customers.filter((customers) => customers.id === userID).map(x=>x.City)
 
-  const [userData, setUserData] = useState({ firstName: '', lastName: '', City: '' });
-
-  
+  const userFname=customers.filter((customers) => customers.id === userID).map(x=>x.firstName)
+  const userLname=customers.filter((customers) => customers.id === userID).map(x=>x.lastName)
+  const userCity=customers.filter((customers) => customers.id === userID).map(x=>x.City)
   
 
+  const [userData, setUserData] = useState({ firstName: String(userFname), lastName: String(userLname), City: String(userCity) });
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
     const obj = { firstName: userData.firstName, lastName: userData.lastName, City: userData.City }
     await updateDoc(doc(db, 'Customers', userID), obj);
   }
+
   const DeleteUser = async () => {
     purchases.filter(purchases=>purchases.CustomerID===userID).map(async (x)=>{
       return(<div key={x.id}>{await deleteDoc(doc(db, 'Purchases', x.id))}</div>)
     })
     await deleteDoc(doc(db, 'Customers', userID))
   }
+  
 
   return (
     <div className="App">
       <br /><br />
       <h2>Edit Customer</h2>
 
+
       <form style={{ padding: '2px', margin: '5px', width: '100px' }} onSubmit={handleSubmit}>
         First Name:{' '}
-        <input type='text'  defaultValue={userFname}  onChange={(e) => setUserData({ ...userData, firstName: e.target.value })} required/>
+        <input type='text' defaultValue={userFname}  onChange={(e) => setUserData({ ...userData, firstName: e.target.value })} required/>
         <br />
         Last Name:{' '}
         <input type='text' defaultValue={userLname} onChange={(e) => setUserData({ ...userData, lastName: e.target.value })} required/>

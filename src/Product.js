@@ -4,6 +4,11 @@ import { Link  } from 'react-router-dom'
 function Product({ product }) {
   const customers = useSelector((state) => state.customers);
   const purchases = useSelector((state) => state.purchases);
+  let quantity = product.Quantity;
+  if(quantity===0)
+  {
+    quantity='Out of stock'
+  }
 
 
 
@@ -13,7 +18,7 @@ function Product({ product }) {
       Product name:{' '}<Link to={`/editProduct`} state={product.id}>{product.Name}</Link>
       <br /><br />
       Price:{' '}{product.Price}{' '}NIS<br /><br />
-      Quantity:{' '}{product.Quantity}<br /><br />
+      Quantity:{' '}{quantity}<br /><br />
       <div style={{ border: '3px solid green', width: '200px', padding: '10px', margin: '10px'}}>
       <h3>Customers</h3>
         {

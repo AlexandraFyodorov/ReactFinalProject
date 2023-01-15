@@ -48,10 +48,7 @@ function BuyProduct() {
   return (
     <div className="App">
       <br /><br />
-      <h2>Store</h2>
-      userID:{userID}<br/>
-      Customer: {userName}<br/><br/><br/>
-      
+      <h2>Store</h2>      
       <form onSubmit={handleSubmit}>
         Customers:
         <select style={{ padding: '2px', margin: '5px'}}  name='customerId' onChange={handleChange} required>

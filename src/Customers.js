@@ -7,10 +7,6 @@ function Customers() {
   const products = useSelector((state) => state.products);
   const navigate = useNavigate();
 
-
-
-
-
   return (
     <div className="App">
       <br /><br />
@@ -20,19 +16,16 @@ function Customers() {
           <th style={{ color: 'green', padding: '10px' }}>Customer Name</th>
           <th style={{ color: 'green', padding: '10px' }}>List of products</th>
           <th style={{ color: 'green', padding: '10px' }}>List of dates</th>
-
-          {customers.map((user) => {
+          {
+          customers.map((user) => {
             return (
               <tr key={user.id}>
-
                 <td>{user.firstName}</td>
-
                 <td>
                   {
                     products.map((item) => {
                       return (
                         <tr key={item.id}>
-
                           {
                             purchases.filter((purchases) => purchases.ProductID === item.id && purchases.CustomerID === user.id).map((x) => {
                               return (
@@ -47,7 +40,6 @@ function Customers() {
                     })
                   }
                 </td>
-
                 <td>
                   {
                     purchases.filter((purchases) => purchases.CustomerID === user.id).map((x) => {
