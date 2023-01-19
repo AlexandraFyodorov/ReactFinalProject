@@ -12,7 +12,7 @@ function PurchasesTable() {
   const customer = sessionStorage['customerId']; //ID
   const date = sessionStorage['date']; //Date
 
-  let customerToShow = customers;
+  let customerToShow = [];
   let productsToShow = purchases;
   let dateToShow = purchases
 
@@ -31,18 +31,33 @@ function PurchasesTable() {
       productsToShow = purchases.filter((purchases) => purchases.CustomerID === customer && purchases.Date === date)
     }
   }
-  
   else if (product) {
+    
     productsToShow = purchases.filter((purchases) => purchases.ProductID === product)
+    
     dateToShow = productsToShow
     if(date)
     {
       dateToShow = purchases.filter((purchases) => purchases.ProductID === product && purchases.Date === date)
+      productsToShow=dateToShow;
     }
+    productsToShow.forEach( data => 
+      {
+        const firstEl = customers.filter(customers=>customers.id===data.CustomerID)
+        customerToShow.push(firstEl[0])
+      })
   }
   else if (date) {
     dateToShow = purchases.filter((purchases) =>  purchases.Date === date)
     productsToShow = purchases.filter((purchases) =>  purchases.Date === date)
+    productsToShow.forEach( data => 
+      {
+        const firstEl = customers.filter(customers=>customers.id===data.CustomerID)
+        customerToShow.push(firstEl[0])
+      })
+  }
+  else{
+    customerToShow=customers
   }
 
 
@@ -60,11 +75,11 @@ function PurchasesTable() {
             <td>List of dates</td>
           </tr>
           {
-            customerToShow.map((user) => {
+           customerToShow.map((user) => {
 
-              return (
-                <tr key={user.id}>
-                  <td>{user.firstName + " " + user.lastName}</td>
+            return (
+              <tr key={user.id}>
+                <td>{user.firstName + " " + user.lastName}</td>
                   <td>
                     {
                       

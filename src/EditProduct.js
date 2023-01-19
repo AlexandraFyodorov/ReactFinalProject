@@ -20,7 +20,7 @@ function EditProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const obj = { Name: productData.Name, Price: parseInt(productData.Price), Quantity: parseInt(productData.Quantity) }
+    const obj = { Name: String(productData.Name), Price: parseInt(productData.Price), Quantity: parseInt(productData.Quantity) }
     await updateDoc(doc(db, 'Products', productID), obj);
   }
  const DeleteProduct=async()=>{

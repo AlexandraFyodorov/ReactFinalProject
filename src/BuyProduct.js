@@ -28,7 +28,7 @@ function BuyProduct() {
     const itemName = products.filter(products=>products.id===addData.productId).map(x=>x.Name)
     const itemPrice = products.filter(products=>products.id===addData.productId).map(x=>x.Price)
     const itemQuantity = products.filter(products=>products.id===addData.productId).map(x=>x.Quantity)
-    const obj = { Name: itemName , Price: parseInt(itemPrice), Quantity: parseInt(itemQuantity-1) }
+    const obj = { Name: String(itemName) , Price: parseInt(itemPrice), Quantity: parseInt(itemQuantity-1) }
 
     if(userID)
     {

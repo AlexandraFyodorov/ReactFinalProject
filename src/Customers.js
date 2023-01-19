@@ -6,6 +6,9 @@ function Customers() {
   const customers = useSelector((state) => state.customers);
   const products = useSelector((state) => state.products);
   const navigate = useNavigate();
+  let customerToShow = customers;
+  let productsToShow = purchases;
+  let dateToShow = purchases
 
   return (
     <div className="App">
@@ -13,49 +16,52 @@ function Customers() {
       <h2>Customers</h2>
       <table border='1'>
         <tbody>
-          <th style={{ color: 'green', padding: '10px' }}>Customer Name</th>
-          <th style={{ color: 'green', padding: '10px' }}>List of products</th>
-          <th style={{ color: 'green', padding: '10px' }}>List of dates</th>
+          <tr style={{ color: 'blue', padding: '10px' }}>
+            <td>Customer Name</td>
+            <td>List of products</td>
+            <td>List of dates</td>
+          </tr>
           {
-          customers.map((user) => {
+           customerToShow.map((user) => {
+
             return (
               <tr key={user.id}>
-                <td>{user.firstName}</td>
-                <td>
-                  {
-                    products.map((item) => {
-                      return (
-                        <tr key={item.id}>
-                          {
-                            purchases.filter((purchases) => purchases.ProductID === item.id && purchases.CustomerID === user.id).map((x) => {
-                              return (
-                                <tr key={x.id}>
-                                  <li>{item.Name}</li>
-                                </tr>
-                              )
-                            })
-                          }
-                        </tr>
-                      )
-                    })
-                  }
-                </td>
-                <td>
-                  {
-                    purchases.filter((purchases) => purchases.CustomerID === user.id).map((x) => {
-                      return (
-                        <tr key={x.id}>
-                          <li>{x.Date}</li>
-                        </tr>
-                      )
-                    })
-                  }
-                </td>
-              </tr>
-            )
-          })
+                <td>{user.firstName + " " + user.lastName}</td>
+                  <td>
+                    {
+                      
+                      productsToShow.filter(productsToShow=>productsToShow.CustomerID===user.id).map((item) => {
+                        return (
+                          <div key={item.id}>
+                            {
+                              <div>{
+                                products.filter(products => products.id === item.ProductID).map(x => {
+                                  return <div key={x.id}>
+                                    {x.Name}
+                                  </div>
+                                })
+                              }</div>
+                            }
+                          </div>
+                        )
+                      })
+                    }
+                  </td>
+                  <td>
+                    {
+                      dateToShow.filter(dateToShow=>dateToShow.CustomerID===user.id).map((x) => {
+                        return (
+                          <div key={x.id}>
+                            <div>{x.Date}</div>
+                          </div>
+                        )
+                      })
+                    }
+                  </td>
+                </tr>
+              )
+            })
           }
-
         </tbody>
       </table>
       <br /><br />
