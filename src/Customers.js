@@ -1,5 +1,15 @@
 import { useSelector } from 'react-redux';
-import {useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { Button } from '@mui/material';
+import { Container } from '@mui/system';
 
 function Customers() {
   const purchases = useSelector((state) => state.purchases);
@@ -11,63 +21,58 @@ function Customers() {
   let dateToShow = purchases
 
   return (
-    <div className="App">
+    <Container>
+      
       <br /><br />
-      <h2>Customers</h2>
-      <table border='1'>
-        <tbody>
-          <tr style={{ color: 'blue', padding: '10px' }}>
-            <td>Customer Name</td>
-            <td>List of products</td>
-            <td>List of dates</td>
-          </tr>
-          {
-           customerToShow.map((user) => {
-
-            return (
-              <tr key={user.id}>
-                <td>{user.firstName + " " + user.lastName}</td>
-                  <td>
-                    {
-                      
-                      productsToShow.filter(productsToShow=>productsToShow.CustomerID===user.id).map((item) => {
-                        return (
-                          <div key={item.id}>
-                            {
-                              <div>{
-                                products.filter(products => products.id === item.ProductID).map(x => {
-                                  return <div key={x.id}>
-                                    {x.Name}
-                                  </div>
-                                })
-                              }</div>
-                            }
-                          </div>
-                        )
-                      })
-                    }
-                  </td>
-                  <td>
-                    {
-                      dateToShow.filter(dateToShow=>dateToShow.CustomerID===user.id).map((x) => {
-                        return (
-                          <div key={x.id}>
-                            <div>{x.Date}</div>
-                          </div>
-                        )
-                      })
-                    }
-                  </td>
-                </tr>
-              )
-            })
-          }
-        </tbody>
-      </table>
+      <Button variant="outlined" size="large" onClick={() => navigate(`/buyProduct`)}>Buy Product</Button><br/><br/>
+      <TableContainer component={Paper} >
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow bgcolor="#5D7B9D" >
+              <TableCell><font color="#fff">Customer Name</font></TableCell>
+              <TableCell><font color="#fff">Products</font></TableCell>
+              <TableCell><font color="#fff">Date of purchases</font></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {
+              customerToShow.map((user) => {
+                return (
+                  <TableRow key={user.id}>
+                    <TableCell>{user.firstName + " " + user.lastName}</TableCell>
+                    <TableCell>
+                      {
+                        productsToShow.filter(productsToShow => productsToShow.CustomerID === user.id).map((item) => {
+                          return (
+                            products.filter(products => products.id === item.ProductID).map(x => {
+                              return <div key={x.id}>
+                                <TableCell>{x.Name}</TableCell>
+                              </div>
+                            })
+                          )
+                        })
+                      }
+                    </TableCell>
+                    <TableCell>
+                      {
+                        dateToShow.filter(dateToShow => dateToShow.CustomerID === user.id).map((x) => {
+                          return (
+                            <TableRow key={x.id}>
+                              <TableCell>{x.Date}</TableCell>
+                            </TableRow>
+                          )
+                        })
+                      }
+                    </TableCell>
+                  </TableRow>
+                )
+              })
+            }
+          </TableBody>
+        </Table>
+      </TableContainer>
       <br /><br />
-      <button onClick={()=>navigate(`/buyProduct`)}>Buy Product</button>
-    </div>
+    </Container>
   );
 }
-
 export default Customers;
