@@ -9,9 +9,6 @@ function Product({ product }) {
   {
     quantity='Out of stock'
   }
-
-
-
   return (
     <div style={{ border: '3px solid green', width: '250px', padding: '10px', margin: '10px'}}>
       <h2>Product data</h2>
@@ -32,10 +29,8 @@ function Product({ product }) {
                         <div>Purchased date:{' '}{item.Date}</div>
                         <Link to={`/buyProduct`} state={user.id} >
                         <button>ADD</button>
-                        </Link>
-                        
-                      </div>
-                      
+                        </Link>            
+                      </div> 
                     ) 
                   })
                 }    
@@ -43,9 +38,6 @@ function Product({ product }) {
             )
           })
         }
-        
-        
-
     </div>
     </div>
   );

@@ -22,9 +22,8 @@ function Customers() {
 
   return (
     <Container>
-      
       <br /><br />
-      <Button variant="outlined" size="large" onClick={() => navigate(`/buyProduct`)}>Buy Product</Button><br/><br/>
+      <Button variant="outlined" size="large" onClick={() => navigate(`/buyProduct`)}>Buy Product</Button><br /><br />
       <TableContainer component={Paper} >
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
