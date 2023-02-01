@@ -3,6 +3,13 @@ import { useLocation, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {updateDoc, doc, deleteDoc } from 'firebase/firestore';
 import db from './firebase';
+import { Container } from '@mui/system';
+import { Button } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
 
 function EditCustomer() {
   const location = useLocation()
@@ -10,20 +17,17 @@ function EditCustomer() {
   const products = useSelector((state) => state.products);
   const purchases = useSelector((state) => state.purchases);
   const customers = useSelector((state) => state.customers);
-
   const userFname=customers.filter((customers) => customers.id === userID).map(x=>x.firstName)
   const userLname=customers.filter((customers) => customers.id === userID).map(x=>x.lastName)
   const userCity=customers.filter((customers) => customers.id === userID).map(x=>x.City)
   
 
   const [userData, setUserData] = useState({ firstName: String(userFname), lastName: String(userLname), City: String(userCity) });
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const obj = { firstName: userData.firstName, lastName: userData.lastName, City: userData.City }
     await updateDoc(doc(db, 'Customers', userID), obj);
   }
-
   const DeleteUser = async () => {
     purchases.filter(purchases=>purchases.CustomerID===userID).map(async (x)=>{
       return(<div key={x.id}>{await deleteDoc(doc(db, 'Purchases', x.id))}</div>)
@@ -33,9 +37,10 @@ function EditCustomer() {
   
 
   return (
-    <div className="App">
+    <Container>
       <br /><br />
       <h2>Edit Customer</h2>
+      
 
 
       <form style={{ padding: '2px', margin: '5px', width: '100px' }} onSubmit={handleSubmit}>
@@ -86,7 +91,7 @@ function EditCustomer() {
 
 
 
-    </div>
+    </Container>
   );
 }
 
