@@ -9,17 +9,16 @@ function Products() {
   return (
     <Container>
       <br /><br />
-      <Paper sx={{ width: 500 }} style={{ padding: 0.5, textAlign: "center", }} elevation={3}><h4>Total Amount of purchased products: {purchases.length}</h4></Paper>
+      <Paper sx={{ width: 1110 }} style={{ padding: 0.5, textAlign: "center", margin: 10 }} elevation={3}><h3>Total Amount of purchased products: {purchases.length}</h3></Paper>
       <br />
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-      {
-      products.map((item) => {
-        return <Product key={item.id} product={item} />
-      })
-      }
-</Grid>
+        {
+          products.map((item) => {
+            return <Product key={item.id} product={item} />
+          })
+        }
+      </Grid>
     </Container>
   );
 }
-
 export default Products;

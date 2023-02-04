@@ -10,6 +10,8 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+
 
 function BuyProduct() {
   const location = useLocation()
@@ -40,9 +42,11 @@ function BuyProduct() {
   return (
     <Container>
       <br /><br />
-      <FormControl sx={{ m: 1, width: 300, }}>
-        <InputLabel id="demo-multiple-Customers-label"  defaultValue={userID}>Customers</InputLabel>
-        <Select labelId="demo-multiple-Customers-label" id="demo-multiple-Customers"
+      <FormControl required  sx={{ m: 1, width: 300, }}>
+        <InputLabel  id="demo-simple-select-required-label"  defaultValue={userID}>Customers</InputLabel>
+        <Select 
+       labelId="demo-simple-select-required-label"
+       id="demo-simple-select-required"
           defaultValue={userID} name='customerId' onChange={handleChange} input={<OutlinedInput label="Customers" />}>
           {
             customers.map(customer => {
@@ -50,10 +54,13 @@ function BuyProduct() {
             })
           }
         </Select>
+        <FormHelperText>Required</FormHelperText>
       </FormControl>
-      <FormControl sx={{ m: 1, width: 300, }}>
-        <InputLabel id="demo-multiple-products-label" >Products</InputLabel>
-        <Select labelId="demo-multiple-products-label" id="demo-multiple-products"
+      <FormControl required  sx={{ m: 1, width: 300, }}>
+        <InputLabel  id="demo-simple-select-required-label" >Products</InputLabel>
+        <Select 
+        labelId="demo-simple-select-required-label"
+        id="demo-simple-select-required"
           defaultValue='' name='productId' onChange={handleChange} input={<OutlinedInput label="Products" />}>
           {
             products.filter(products=>products.Quantity>0).map(product => {
@@ -61,6 +68,7 @@ function BuyProduct() {
             })
           }
         </Select>
+        <FormHelperText>Required</FormHelperText>
       </FormControl>
       <Button sx={{ m: 1, width: 200, padding:1.7}} variant="outlined" size="large" type='submit' color="primary" onClick={handleSubmit}>BUY</Button>
     </Container>
