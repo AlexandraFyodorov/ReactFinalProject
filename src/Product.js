@@ -41,7 +41,6 @@ function Product({ product }) {
         <h4>Customers</h4>
         <List sx={{
           width: '100%',
-          maxWidth: 400,
           bgcolor: 'background.paper',
           position: 'relative',
           overflow: 'auto',
@@ -61,7 +60,7 @@ function Product({ product }) {
                             <Grid container alignItems="center">
                               <Grid item xs>
                                 <Typography gutterBottom variant="h7" component="div">
-                                  <Link to={`/editCustomer`} state={user.id} >{user.firstName}</Link>
+                                  <Link to={`/editCustomer`} state={user.id} >{user.firstName}{' '}{user.lastName}</Link>
                                 </Typography>
                               </Grid>
                               <Grid item xs>

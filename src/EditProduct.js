@@ -25,12 +25,23 @@ function EditProduct() {
   const products = useSelector((state) => state.products);
   const customers = useSelector((state) => state.customers);
   const purchases = useSelector((state) => state.purchases);
-
   let productName = products.filter((products) => products.id === productID).map(x => x.Name)
   let productPrice = products.filter((products) => products.id === productID).map(x => x.Price)
   let productQuantity = products.filter((products) => products.id === productID).map(x => x.Quantity)
-
   const [productData, setProductData] = useState({ Name: String(productName), Price: parseInt(productPrice), Quantity: parseInt(productQuantity) });
+  let customersToShow=[];
+
+let purchasesToShow = purchases.filter(purchases=>purchases.ProductID===productID)
+purchasesToShow.forEach(data => {
+  const firstEl = customers.filter(customers => customers.id === data.CustomerID)
+  customersToShow.push(firstEl[0])
+})
+let myArrSerialized = customersToShow.map(e => JSON.stringify(e));
+    const mySetSerialized = new Set(myArrSerialized);
+    const myUniqueArrSerialized = [...mySetSerialized];
+    customersToShow = myUniqueArrSerialized.map(e => JSON.parse(e))
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const obj = { Name: String(productData.Name), Price: parseInt(productData.Price), Quantity: parseInt(productData.Quantity) }
@@ -58,22 +69,13 @@ function EditProduct() {
       <Typography variant='h6'>Customers List</Typography>
       <List sx={style} component="nav" aria-label="mailbox folders">
         {
-          customers.map((user) => {
+          customersToShow.map((user) => {
             return (
-              <li key={`section-${user.id}`}>
-                <ul>
-                  {
-                    purchases.filter((purchases) => purchases.ProductID === productID && purchases.CustomerID === user.id).map((x) => {
-                      return (
-                        <ListItem divider key={`item-${x.id}-${x}`}>
-                          <ListItemText primary={<Link to={`/editCustomer`} state={user.id} >{user.firstName}{' '}{user.lastName}</Link>} />
-                        </ListItem>
-
-                      )
-                    })
-                  }
-                </ul>
-              </li>
+              
+                  <ListItem divider key={`item-${user.id}-${user}`}>
+                    <ListItemText primary={<Link to={`/editCustomer`} state={user.id} >{user.firstName}{' '}{user.lastName}</Link>} />
+                  </ListItem>
+              
             )
           })
         }
