@@ -19,7 +19,6 @@ function PurchasesTable() {
   let customerToShow = [];
   let productsToShow = purchases;
   let dateToShow = purchases
-
   if (customer) {
     customerToShow = customers.filter((customers) => customers.id === customer)
     productsToShow = purchases.filter((purchases) => purchases.CustomerID === customer)

@@ -13,7 +13,6 @@ const storeReducer = (state = initialValue, action) => {
       return { ...state, customers: action.payload };
     case 'LOADPRODUCTS':
       return { ...state, products: action.payload };
-
     default:
       return state;
   }

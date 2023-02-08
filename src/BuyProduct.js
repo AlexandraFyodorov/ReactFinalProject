@@ -10,8 +10,6 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
-import FormHelperText from '@mui/material/FormHelperText';
-
 
 function BuyProduct() {
   const location = useLocation()
@@ -25,10 +23,6 @@ function BuyProduct() {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-  
-
-
     const itemName = products.filter(products => products.id === addData.productId).map(x => x.Name)
     const itemPrice = products.filter(products => products.id === addData.productId).map(x => x.Price)
     const itemQuantity = products.filter(products => products.id === addData.productId).map(x => x.Quantity)
@@ -48,30 +42,26 @@ function BuyProduct() {
       <FormControl required sx={{ m: 1, width: 300, }}>
         <InputLabel id="demo-simple-select-required-label" defaultValue={userID}>Customers</InputLabel>
         <Select
-          labelId="demo-simple-select-required-label"
-          id="demo-simple-select-required"
-          defaultValue={userID} name='customerId' onChange={handleChange} input={<OutlinedInput label="Customers" />} required>
+          labelId="demo-multiple-Customers-label"
+          id="demo-multiple-Customers"
+          defaultValue={userID} name='customerId' onChange={handleChange} input={<OutlinedInput label="Customers" />}>
           {
             customers.map(customer => {
               return <MenuItem value={customer.id} key={customer.id}>{customer.firstName + ' ' + customer.lastName}</MenuItem>
             })
           }
         </Select>
-        <FormHelperText>Required</FormHelperText>
       </FormControl>
       <FormControl required sx={{ m: 1, width: 300, }}>
         <InputLabel id="demo-simple-select-required-label" >Products</InputLabel>
-        <Select
-          labelId="demo-simple-select-required-label"
-          id="demo-simple-select-required"
-          defaultValue='' name='productId' onChange={handleChange} input={<OutlinedInput label="Products" />} required>
+        <Select labelId="demo-multiple-products-label" id="demo-multiple-products"
+          defaultValue='' name='productId' onChange={handleChange} input={<OutlinedInput label="Products" />}>
           {
             products.filter(products => products.Quantity > 0).map(product => {
               return <MenuItem value={product.id} key={product.id}>{product.Name}</MenuItem>
             })
           }
         </Select>
-        <FormHelperText>Required</FormHelperText>
       </FormControl>
       <Button sx={{ m: 1, width: 200, padding: 1.7 }} variant="outlined" size="large" type='submit' color="primary" onClick={handleSubmit}>BUY</Button>
     </Container>

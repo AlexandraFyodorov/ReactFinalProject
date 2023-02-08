@@ -31,9 +31,7 @@ function EditCustomer() {
   const userLname = customers.filter((customers) => customers.id === userID).map(x => x.lastName)
   const userCity = customers.filter((customers) => customers.id === userID).map(x => x.City)
   const [userData, setUserData] = useState({ firstName: String(userFname), lastName: String(userLname), City: String(userCity) });
-
   let productToShow = [];
-
   let purchasesToShow = purchases.filter(purchases => purchases.CustomerID === userID)
   purchasesToShow.forEach(data => {
     const firstEl = products.filter(products => products.id === data.ProductID)

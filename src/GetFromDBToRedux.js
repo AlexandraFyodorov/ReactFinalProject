@@ -1,11 +1,10 @@
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import {collection,onSnapshot, query} from 'firebase/firestore';
+import { collection, onSnapshot, query } from 'firebase/firestore';
 import db from './firebase';
 
 function GetFromDBToRedux() {
   const dispatch = useDispatch();
-
   useEffect(() => {
     //Get all Purchases
     const PurchasesData = async () => {
@@ -19,7 +18,6 @@ function GetFromDBToRedux() {
       });
     };
     PurchasesData();
-
     //Get all Customers
     const CustomersData = async () => {
       const q = query(collection(db, 'Customers'));
@@ -32,11 +30,10 @@ function GetFromDBToRedux() {
       });
     };
     CustomersData();
-
     const ProductsData = async () => {
       const q = query(collection(db, 'Products'));
       onSnapshot(q, (querySnapshot) => {
-        const products= querySnapshot.docs.map((doc) => ({
+        const products = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
@@ -46,13 +43,13 @@ function GetFromDBToRedux() {
     ProductsData();
   }, []);
 
- 
- 
+
+
 
 
   return (
     <div>
-      
+
     </div>
   );
 }

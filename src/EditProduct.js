@@ -18,7 +18,6 @@ const style = {
   bgcolor: '#fafafa',
   padding: 2
 };
-
 function EditProduct() {
   const location = useLocation()
   const productID = location.state
@@ -29,19 +28,17 @@ function EditProduct() {
   let productPrice = products.filter((products) => products.id === productID).map(x => x.Price)
   let productQuantity = products.filter((products) => products.id === productID).map(x => x.Quantity)
   const [productData, setProductData] = useState({ Name: String(productName), Price: parseInt(productPrice), Quantity: parseInt(productQuantity) });
-  let customersToShow=[];
+  let customersToShow = [];
 
-let purchasesToShow = purchases.filter(purchases=>purchases.ProductID===productID)
-purchasesToShow.forEach(data => {
-  const firstEl = customers.filter(customers => customers.id === data.CustomerID)
-  customersToShow.push(firstEl[0])
-})
-let myArrSerialized = customersToShow.map(e => JSON.stringify(e));
-    const mySetSerialized = new Set(myArrSerialized);
-    const myUniqueArrSerialized = [...mySetSerialized];
-    customersToShow = myUniqueArrSerialized.map(e => JSON.parse(e))
-
-
+  let purchasesToShow = purchases.filter(purchases => purchases.ProductID === productID)
+  purchasesToShow.forEach(data => {
+    const firstEl = customers.filter(customers => customers.id === data.CustomerID)
+    customersToShow.push(firstEl[0])
+  })
+  let myArrSerialized = customersToShow.map(e => JSON.stringify(e));
+  const mySetSerialized = new Set(myArrSerialized);
+  const myUniqueArrSerialized = [...mySetSerialized];
+  customersToShow = myUniqueArrSerialized.map(e => JSON.parse(e))
   const handleSubmit = async (e) => {
     e.preventDefault();
     const obj = { Name: String(productData.Name), Price: parseInt(productData.Price), Quantity: parseInt(productData.Quantity) }
@@ -71,16 +68,14 @@ let myArrSerialized = customersToShow.map(e => JSON.stringify(e));
         {
           customersToShow.map((user) => {
             return (
-              
-                  <ListItem divider key={`item-${user.id}-${user}`}>
-                    <ListItemText primary={<Link to={`/editCustomer`} state={user.id} >{user.firstName}{' '}{user.lastName}</Link>} />
-                  </ListItem>
-              
+
+              <ListItem divider key={`item-${user.id}-${user}`}>
+                <ListItemText primary={<Link to={`/editCustomer`} state={user.id} >{user.firstName}{' '}{user.lastName}</Link>} />
+              </ListItem>
             )
           })
         }
       </List>
-
     </Container>
   );
 }

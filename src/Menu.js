@@ -11,9 +11,8 @@ function Menu() {
           <IconButton size="small" edge="start" color="inherit" aria-label="menu" sx={{ mr: 70 }} disabled >
             <h2>Menu</h2>
           </IconButton>
-          
           <Typography variant="h6" component="div" sx={{ flexGrow: 0.1, borderColor: 'divider' }}>
-            <Button><Link  to={`/products`}>Products</Link></Button>
+            <Button><Link to={`/products`}>Products</Link></Button>
           </Typography>
           <Typography variant="h6" component="div" sx={{ flexGrow: 0.1, borderColor: 'divider' }}>
             <Button><Link to={`/purchases`}>Purchases</Link></Button>
@@ -21,8 +20,6 @@ function Menu() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 0.1, borderColor: 'divider' }}>
             <Button><Link to={`/customers`}>Customers</Link></Button>
           </Typography>
-
-
         </Toolbar>
       </AppBar>
     </Box>
